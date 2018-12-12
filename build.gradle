@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'party.52it'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'com.google.guava:guava:24.0-android'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.60'
+}
