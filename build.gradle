@@ -1,11 +1,38 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+    id 'signing'
 }
 
 group 'party.52it'
 version '1.0.0'
 
 sourceCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    classifier = 'javadoc'
+}
+
+//添加UTF-8编码否则注释可能JAVADOC文档可能生成不了
+javadoc {
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        failOnError false
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+}
 
 repositories {
     mavenCentral()
@@ -15,4 +42,27 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation 'com.google.guava:guava:24.0-android'
     implementation 'org.bouncycastle:bcprov-jdk15on:1.60'
+}
+
+publishing{
+    publications{
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+        }
+    }
+    repositories{
+        maven{
+            url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            credentials {
+                username sonatypeUsername
+                password sonatypePassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
