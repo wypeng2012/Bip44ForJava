@@ -1,6 +1,8 @@
 # Bip44ForJava
 bip44 library for java
 
+中文文档：[https://blog.csdn.net/wypeng2010/article/details/84984476](https://blog.csdn.net/wypeng2010/article/details/84984476)
+
 **- Use it**
 
 
